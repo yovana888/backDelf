@@ -34,10 +34,9 @@ class ProductController extends Controller
             $sortOrder='desc';
         }
 
-
         if($request->name){
-            $products = DB::table('products')
-            ->where('name','LIKE','%'.$request->name.'%')
+            $products = DB::table('products') 
+            ->where(DB::raw('lower(name)'), 'like', '%' . strtolower($request->name) . '%')
             ->orderBy($sortBy,$sortOrder)
             ->paginate($paginate);
         }else{
